@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="assets/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Calculator</h1>
+      <div class="wrapper">
+        <div></div>
+        <div class="calculator">
+          <div class="display">
+            <input type="text" name="display" id="inputtext" />
+            <div id="backspace">
+              <img src="./assets/backspace.svg" alt="backspace" />
+            </div>
+          </div>
+          <div class="buttons">
+            <div id="clear">AC</div>
+            <div id="brackets">()</div>
+            <div id="operand">^</div>
+            <div id="multiply">*</div>
+            <div id="nine">9</div>
+            <div id="eight">8</div>
+            <div id="seven">7</div>
+            <div id="divide">/</div>
+            <div id="six">6</div>
+            <div id="five">5</div>
+            <div id="four">4</div>
+            <div id="subtract">-</div>
+            <div id="three">3</div>
+            <div id="two">2</div>
+            <div id="one">1</div>
+            <div id="plus">+</div>
+            <div id="zero">0</div>
+            <div id="percentage">%</div>
+            <div id="point">.</div>
+            <div id="calculate">=</div>
+          </div>
+        </div>
+        <div class="history" id="historymain">
+          <div id="showhistory">
+            <p>Show History</p>
+          </div>
+          <div class="hide" id="history">
+            <div id="history_head">
+              <h2>History</h2>
+            </div>
+            <div id="clearhistory"></div>
+            <div id="history_data"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dark" id="darkmode">
+      <img src="assets/contrast.svg" alt="" />
+    </div>
+
+    <script src="./js/main.js"></script>
+  </body>
+</html>
