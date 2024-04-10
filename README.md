@@ -1,4 +1,4 @@
-# Notes
+# Calculator
 
 A JavaScript project to create a calculator.<br>
 Execute **complex BODMAS** operations.<br>
