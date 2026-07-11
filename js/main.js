@@ -1,4 +1,32 @@
 darkmode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+const inputField = document.getElementById("inputtext");
+
+const keyMap = {
+  1: "one",
+  2: "two",
+  3: "three",
+  4: "four",
+  5: "five",
+  6: "six",
+  7: "seven",
+  8: "eight",
+  9: "nine",
+  0: "zero",
+  "+": "plus",
+  "-": "subtract",
+  "*": "multiply",
+  "/": "divide",
+  "^": "operand",
+  ".": "point",
+  "%": "percentage",
+  "(": "brackets",
+  ")": "brackets",
+  "=": "calculate",
+  Enter: "calculate",
+  Backspace: "backspace",
+  Delete: "clear",
+};
 Array.prototype.operand = function () {
   let solved = this;
   for (let i = 0; i < this.length; i++) {
@@ -170,82 +198,45 @@ function calculator(str) {
 }
 
 window.onload = function () {
-  document.getElementById("inputtext").focus();
+  inputField.focus();
 };
+Object.keys(keyMap).forEach(function (key) {
+  if (
+    key !== "Backspace" &&
+    key !== "Delete" &&
+    key !== "(" &&
+    key !== ")" &&
+    key !== "=" &&
+    key !== "Enter"
+  ) {
+    document.getElementById(keyMap[key]).addEventListener("click", function () {
+      inputField.value += key;
+    });
+  }
+});
 
-document.getElementById("one").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "1";
-});
-document.getElementById("two").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "2";
-});
-document.getElementById("three").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "3";
-});
-document.getElementById("four").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "4";
-});
-document.getElementById("five").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "5";
-});
-document.getElementById("six").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "6";
-});
-document.getElementById("seven").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "7";
-});
-document.getElementById("eight").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "8";
-});
-document.getElementById("nine").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "9";
-});
-document.getElementById("zero").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "0";
-});
-document.getElementById("plus").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "+";
-});
-document.getElementById("subtract").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "-";
-});
-document.getElementById("multiply").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "*";
-});
-document.getElementById("divide").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "/";
-});
-document.getElementById("operand").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "^";
-});
-document.getElementById("point").addEventListener("click", function () {
-  document.getElementById("inputtext").value += ".";
-});
-document.getElementById("percentage").addEventListener("click", function () {
-  document.getElementById("inputtext").value += "%";
-});
 document.getElementById("brackets").addEventListener("click", function () {
-  if (document.getElementById("inputtext").value.split("").includes("(")) {
-    document.getElementById("inputtext").value += ")";
+  if (inputField.value.split("").includes("(")) {
+    inputField.value += ")";
   } else {
-    document.getElementById("inputtext").value += "(";
+    inputField.value += "(";
   }
 });
 document.getElementById("backspace").addEventListener("click", function () {
-  document.getElementById("inputtext").value = document
+  inputField.value = document
     .getElementById("inputtext")
-    .value.substring(0, document.getElementById("inputtext").value.length - 1);
+    .value.substring(0, inputField.value.length - 1);
 });
 document.getElementById("clear").addEventListener("click", function () {
-  document.getElementById("inputtext").value = "";
+  inputField.value = "";
 });
 document.body.addEventListener("keydown", function (e) {
   if (e.key == "Delete") {
-    document.getElementById("inputtext").value = "";
+    inputField.value = "";
   }
 });
 
-document.getElementById("inputtext").addEventListener("keydown", function (e) {
+inputField.addEventListener("keydown", function (e) {
   if (
     isNaN(e.key) &&
     e.key !== "Backspace" &&
@@ -265,12 +256,26 @@ document.getElementById("inputtext").addEventListener("keydown", function (e) {
   }
 });
 
+inputField.addEventListener("keydown", function (e) {
+  const id = keyMap[e.key];
+
+  if (id) {
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.classList.add("hover");
+
+      setTimeout(() => {
+        element.classList.remove("hover");
+      }, 200);
+    }
+  }
+});
+
 document.getElementById("calculate").addEventListener("click", function () {
-  input = document.getElementById("inputtext").value;
-  document.getElementById("inputtext").value = calculator(
-    document.getElementById("inputtext").value
-  );
-  solved = document.getElementById("inputtext").value;
+  input = inputField.value;
+  inputField.value = calculator(inputField.value);
+  solved = inputField.value;
   document.getElementById("history_head").innerHTML = `<h2>History</h2>`;
   document.getElementById("history_data").innerHTML += `
         <p class="history_input">${input}</p>
@@ -292,11 +297,9 @@ document.getElementById("calculate").addEventListener("click", function () {
 
 document.body.addEventListener("keydown", function (e) {
   if (e.key == "Enter") {
-    input = document.getElementById("inputtext").value;
-    document.getElementById("inputtext").value = calculator(
-      document.getElementById("inputtext").value
-    );
-    solved = document.getElementById("inputtext").value;
+    input = inputField.value;
+    inputField.value = calculator(inputField.value);
+    solved = inputField.value;
     document.getElementById("history_data").innerHTML += `
         <p class="history_input">${input}</p>
         <p class="history_solved">${solved}</p>
@@ -324,20 +327,20 @@ document.getElementById("showhistory").addEventListener("click", function () {
 });
 
 if (!darkmode) {
-  document.getElementById("inputtext").classList.toggle("light");
+  inputField.classList.toggle("light");
   document.querySelector(".container").classList.toggle("light");
   document.body.classList.toggle("light");
 }
 
 document.body.addEventListener("keydown", function (e) {
   if (e.key == "d") {
-    document.getElementById("inputtext").classList.toggle("light");
+    inputField.classList.toggle("light");
     document.querySelector(".container").classList.toggle("light");
     document.body.classList.toggle("light");
   }
 });
 document.getElementById("darkmode").addEventListener("click", function () {
-  document.getElementById("inputtext").classList.toggle("light");
+  inputField.classList.toggle("light");
   document.querySelector(".container").classList.toggle("light");
   document.body.classList.toggle("light");
 });
